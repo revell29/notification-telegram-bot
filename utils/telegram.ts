@@ -1,20 +1,17 @@
-import Bluebird from "bluebird";
 import dotenv from "dotenv";
 import qs from "qs";
 dotenv.config();
 
-const fetch = require("node-fetch");
-
-const TELEGRAM_URL = "https://api.telegram.org/bot";
 const TELEGRAM_KEY = process.env.TELEGRAM_TOKEN;
+const TELEGRAM_URL = "https://api.telegram.org/bot";
+import fetch from "node-fetch";
 
-fetch.Promise = Bluebird;
+export interface SendMessage {
+  chat_id: number;
+  text: string;
+}
 
-const headers = {
-  "Content-Type": "application/json",
-};
-
-export const sendMessage = async (data: any) => {
+export const sendMessage = async (data: SendMessage) => {
   return new Promise(async (resolve, reject) => {
     const query = qs.stringify({
       chat_id: data.chat_id,
@@ -27,7 +24,6 @@ export const sendMessage = async (data: any) => {
     })
       .then((res: any) => res.json())
       .then((json: any) => {
-        console.log(json);
         return resolve(json);
       })
       .catch((err: any) => {

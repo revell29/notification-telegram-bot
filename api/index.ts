@@ -6,7 +6,7 @@ import moment from "moment";
 import "moment/locale/id";
 
 const app = Express();
-const PORT = 3000;
+const PORT = 5000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -15,12 +15,6 @@ app.use(
     origin: "*",
   })
 );
-
-app.get("/api", (req: Request, res: Response) => {
-  res.send({
-    message: "What are you looking bro?",
-  });
-});
 
 app.post("/api/notification", async (req: Request, res: Response) => {
   try {
@@ -62,6 +56,14 @@ app.post("/api/webhook", (req, res) => {
   }
 });
 
+app.use("/*", (req, res) => {
+  res.send({
+    message: "What are you looking bro?",
+  });
+});
+
 app.listen(PORT, () =>
   console.log(`Server running on ${PORT}, http://localhost:${PORT}`)
 );
+
+module.exports = app;

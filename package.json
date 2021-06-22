@@ -1,0 +1,37 @@
+{
+  "name": "jubelio-pos-notif",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "dora",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-typescript": "^7.14.5",
+    "@types/cors": "^2.8.10",
+    "nodemon": "^2.0.7",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.4"
+  },
+  "scripts": {
+    "dev": "nodemon --exec ts-node ./api/index.ts",
+    "start": "node ./dist/api/index.js",
+    "build": "tsc --outDir ./dist"
+  },
+  "dependencies": {
+    "@types/bluebird": "^3.5.35",
+    "@types/express": "^4.17.12",
+    "@types/moment": "^2.13.0",
+    "@types/node-fetch": "^2.5.10",
+    "@vercel/node": "^1.11.1",
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "moment": "^2.29.1",
+    "node-fetch": "^2.6.1",
+    "telegraf": "^4.3.0",
+    "tsc-watch": "^4.4.0"
+  }
+}

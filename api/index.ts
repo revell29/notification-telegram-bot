@@ -16,6 +16,12 @@ app.use(
   })
 );
 
+app.get("/api", (req: Request, res: Response) => {
+  res.send({
+    message: "What are you looking bro?",
+  });
+});
+
 app.post("/api/notification", async (req: Request, res: Response) => {
   try {
     const { message, email, registerName, location_name, payload } = req.body;

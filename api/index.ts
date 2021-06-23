@@ -6,7 +6,7 @@ import moment from "moment";
 import "moment/locale/id";
 
 const app = Express();
-const PORT = 5000;
+const PORT = 8001;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -18,7 +18,15 @@ app.use(
 
 app.post("/api/notification", async (req: Request, res: Response) => {
   try {
-    const { message, email, registerName, location_name, payload } = req.body;
+    const {
+      message,
+      email,
+      registerName,
+      location_name,
+      payload,
+      url,
+      status,
+    } = req.body;
     const text = `<b>POS Report Error</b>
 ==========================================
 <b>Lokasi:</b> ${location_name}
@@ -30,6 +38,8 @@ app.post("/api/notification", async (req: Request, res: Response) => {
 <b>Message:</b>
 <pre><code>${message}</code></pre>
 
+<b>URL:</b> ${url}
+<b>Status:</b> ${status}
 <b>Payload:</b>
 <pre><code>${JSON.stringify(JSON.parse(payload), null, 2)}</code></pre>
 `;

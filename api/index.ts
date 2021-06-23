@@ -18,15 +18,13 @@ app.use(
 
 app.post("/api/notification", async (req: Request, res: Response) => {
   try {
-    const {
-      message,
-      email,
-      registerName,
-      location_name,
-      payload,
-      url,
-      status,
-    } = req.body;
+    let { message, email, registerName, location_name, url, payload, status } =
+      req.body;
+
+    if (payload !== "") {
+      payload = JSON.stringify(JSON.parse(payload), null, 2);
+    }
+
     const text = `<b>POS Report Error</b>
 ==========================================
 <b>Lokasi:</b> ${location_name}
@@ -41,7 +39,7 @@ app.post("/api/notification", async (req: Request, res: Response) => {
 <b>URL:</b> ${url}
 <b>Status:</b> ${status}
 <b>Payload:</b>
-<pre><code>${JSON.stringify(JSON.parse(payload), null, 2)}</code></pre>
+<pre><code>${payload}</code></pre>
 `;
 
     await sendMessage({
@@ -49,7 +47,7 @@ app.post("/api/notification", async (req: Request, res: Response) => {
       text: text,
     });
 
-    console.log(req.body);
+    console.log(text);
     res.status(200).send({ message: "success" });
   } catch (err) {
     console.log(err);

@@ -64,7 +64,7 @@ app.post("/api/webhook", (req, res) => {
   }
 });
 
-app.use("/*", (req, res) => {
+app.get("/", (req, res) => {
   res.send({
     message: "What are you looking bro?",
   });

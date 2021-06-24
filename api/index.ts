@@ -1,8 +1,8 @@
 import Express, { Request, Response } from "express";
 import bodyParser from "body-parser";
 import { sendMessage } from "../utils/telegram";
+import { convertTZ } from "../utils/dateFormat";
 import cors from "cors";
-import moment from "moment";
 import "moment/locale/id";
 import dotenv from "dotenv";
 
@@ -27,12 +27,13 @@ app.post("/api/notification", async (req: Request, res: Response) => {
       payload = JSON.stringify(JSON.parse(payload), null, 2);
     }
 
+    const date = new Date();
     const text = `<b>POS Report Error</b>
 ==========================================
 <b>Lokasi:</b> ${location_name}
 <b>Register:</b> ${registerName}
 <b>Email:</b> ${email}
-<b>Waktu</b> ${moment().locale("id").format("DD MMMM YYYY HH:mm")}
+<b>Waktu</b> ${convertTZ(date, "Asia/Jakrta")}
 ==========================================
 
 <b>Message:</b>

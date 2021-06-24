@@ -1,7 +1,6 @@
-export function convertTZ(date: any, tzString: string) {
-  return new Date(
-    (typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {
-      timeZone: tzString,
-    })
-  );
-}
+import moment from "moment-timezone";
+import "moment/locale/id";
+
+export const dateTimezone = (timezone: string) => {
+  return moment().tz(timezone).format("DD MMMM YYYY H:mm");
+};

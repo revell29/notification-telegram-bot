@@ -1,7 +1,7 @@
 import Express, { Request, Response } from "express";
 import bodyParser from "body-parser";
 import { sendMessage } from "../utils/telegram";
-import { convertTZ } from "../utils/dateFormat";
+import { dateTimezone } from "../utils/dateFormat";
 import cors from "cors";
 import "moment/locale/id";
 import dotenv from "dotenv";
@@ -33,7 +33,7 @@ app.post("/api/notification", async (req: Request, res: Response) => {
 <b>Lokasi:</b> ${location_name}
 <b>Register:</b> ${registerName}
 <b>Email:</b> ${email}
-<b>Waktu</b> ${convertTZ(date, "Asia/Jakarta")}
+<b>Waktu</b> ${dateTimezone("Asia/Jakarta")}
 ==========================================
 
 <b>Message:</b>

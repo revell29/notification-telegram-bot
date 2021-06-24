@@ -7,7 +7,7 @@ const TELEGRAM_URL = "https://api.telegram.org/bot";
 import fetch from "node-fetch";
 
 export interface SendMessage {
-  chat_id: number;
+  chat_id: string;
   text: string;
 }
 

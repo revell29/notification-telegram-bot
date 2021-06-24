@@ -4,9 +4,11 @@ import { sendMessage } from "../utils/telegram";
 import cors from "cors";
 import moment from "moment";
 import "moment/locale/id";
+import dotenv from "dotenv";
 
 const app = Express();
 const PORT = 8001;
+dotenv.config();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -43,7 +45,7 @@ app.post("/api/notification", async (req: Request, res: Response) => {
 `;
 
     await sendMessage({
-      chat_id: -512955149,
+      chat_id: process.env.GROUP_CHAT_ID,
       text: text,
     });
 

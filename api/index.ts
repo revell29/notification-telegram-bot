@@ -33,7 +33,7 @@ app.post("/api/notification", async (req: Request, res: Response) => {
 <b>Lokasi:</b> ${location_name}
 <b>Register:</b> ${registerName}
 <b>Email:</b> ${email}
-<b>Waktu</b> ${convertTZ(date, "Asia/Jakrta")}
+<b>Waktu</b> ${convertTZ(date, "Asia/Jakarta")}
 ==========================================
 
 <b>Message:</b>

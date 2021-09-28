@@ -5,7 +5,7 @@ import { dateTimezone } from "../utils/dateFormat";
 import cors from "cors";
 import "moment/locale/id";
 import dotenv from "dotenv";
-import { sendMessageDiscord } from "../utils/discord";
+import { client, sendMessageDiscord } from "../utils/discord";
 
 const app = Express();
 const PORT = 8001;
@@ -105,3 +105,5 @@ app.get("/", (req, res) => {
 app.listen(PORT, () =>
   console.log(`Server running on ${PORT}, http://localhost:${PORT}`)
 );
+
+client.login(process.env.DISCORD_TOKEN);

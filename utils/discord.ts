@@ -12,7 +12,6 @@ client.on("ready", () => {
   client.user.setPresence({ activity: { name: "Subscribe" } });
 });
 
-client.login(process.env.DISCORD_TOKEN);
 
 export const sendMessageDiscord = async (body: any) => {
   const channel = client.channels.cache.find(
@@ -51,3 +50,5 @@ export const sendMessageDiscord = async (body: any) => {
       });
   }
 };
+
+export {client}

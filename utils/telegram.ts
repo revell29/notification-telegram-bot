@@ -11,7 +11,7 @@ export interface SendMessage {
   text: string;
 }
 
-export const sendMessage = async (data: SendMessage) => {
+export const sendTelegramMessage = async (data: SendMessage) => {
   return new Promise(async (resolve, reject) => {
     const query = qs.stringify({
       chat_id: data.chat_id,

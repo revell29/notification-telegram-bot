@@ -44,7 +44,9 @@ export const sendMessageDiscord = async (body: any) => {
       .send(`Payload for ${body.location_name}`, {
         files: [filePath],
       })
-      .then(() => {
+      .then((res) => {
+        console.log('success send to channel')
+        console.log(res.content)
         fs.unlinkSync(filePath);
       });
   }

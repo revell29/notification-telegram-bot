@@ -24,6 +24,7 @@ export const sendTelegramMessage = async (data: SendMessage) => {
     })
       .then((res: any) => res.json())
       .then((json: any) => {
+        console.log('success send telegram')
         return resolve(json);
       })
       .catch((err: any) => {

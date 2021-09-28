@@ -66,20 +66,20 @@ app.post("/api/notification", async (req: Request, res: Response) => {
       payload = JSON.stringify(JSON.parse(payload), null, 2);
     }
 
-    // await sendTelegramMessage({
-    //   chat_id: process.env.GROUP_CHAT_ID,
-    //   text: templateTelegram({
-    //     location_name,
-    //     registerName,
-    //     email,
-    //     message,
-    //     url,
-    //     payload,
-    //     status,
-    //   }),
-    // });
+    await sendTelegramMessage({
+      chat_id: process.env.GROUP_CHAT_ID,
+      text: templateTelegram({
+        location_name,
+        registerName,
+        email,
+        message,
+        url,
+        payload,
+        status,
+      }),
+    });
 
-    await sendMessageDiscord(req.body);
+    // await sendMessageDiscord(req.body);
     res.status(200).send({ message: "success" });
   } catch (err) {
     console.log(err);

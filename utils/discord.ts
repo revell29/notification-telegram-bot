@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import { Client, MessageEmbed, TextChannel } from "discord.js";
 import { dateTimezone } from "./dateFormat";
 import fs from "fs";
+import { pathToFileURL, writeTempFile } from "./file";
 
 dotenv.config();
 const client = new Client();
@@ -14,7 +15,6 @@ client.on("ready", () => {
 client.login(process.env.DISCORD_TOKEN);
 
 export const sendMessageDiscord = async (body: any) => {
-  // const channel = client.channels.cache.get(locationName);
   const channel = client.channels.cache.find(
     (ch: any) => ch.name === `${process.env.CHANNEL_NAME}`
   );
@@ -38,17 +38,14 @@ export const sendMessageDiscord = async (body: any) => {
         { name: "Waktu", value: dateTimezone("Asia/Jakarta") }
       );
 
-    fs.writeFileSync(
-      "request.json",
-      JSON.stringify(JSON.parse(body.payload), null, 2)
-    );
+    const filePath = await writeTempFile(`request`, JSON.stringify(JSON.parse(body.payload), null, 2));
     await channel.send(reportEmbeded);
     await channel
       .send(`Payload for ${body.location_name}`, {
-        files: ["./request.json"],
+        files: [filePath],
       })
       .then(() => {
-        fs.unlinkSync("request.json");
+        fs.unlinkSync(filePath);
       });
   }
 };

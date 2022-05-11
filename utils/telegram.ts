@@ -26,10 +26,9 @@ export const sendTelegramMessage = async (data: SendMessage) => {
 
     axios
       .post(`${TELEGRAM_URL}${TELEGRAM_KEY}/sendDocument?${query}`, form)
-      .then((res: any) => res.json())
-      .then((json: any) => {
+      .then((res: any) => {
         console.log("success send telegram");
-        return resolve(json);
+        return resolve(res);
       })
       .catch((err: any) => {
         console.log(err);

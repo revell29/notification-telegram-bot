@@ -77,6 +77,7 @@ app.post("/api/notification", async (req: Request, res: Response) => {
         url,
         payload,
         status,
+        action
       }),
     });
 

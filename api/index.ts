@@ -27,6 +27,7 @@ interface ITemplateTelegram {
   url: string;
   payload: any;
   status: number;
+  action: string;
 }
 
 const templateTelegram = ({
@@ -37,21 +38,21 @@ const templateTelegram = ({
   url,
   payload,
   status,
+  action
 }: ITemplateTelegram) => {
-  const text = `<b>POS Report Error</b>
-      ==========================================
-      <b>Lokasi:</b> ${location_name}
-      <b>Register:</b> ${registerName}
-      <b>Email:</b> ${email}
-      <b>Waktu</b> ${dateTimezone("Asia/Jakarta")}
-      ==========================================
+  const text = `<b>Log POS</b>
+<b>Lokasi:</b> ${location_name}
+<b>Register:</b> ${registerName}
+<b>Email:</b> ${email}
+<b>Waktu</b> ${dateTimezone("Asia/Jakarta")}
+<b>Version</b> ${action ? 'POSV3' : 'POSV2'}
 
-      <b>Message:</b>
-      <pre><code>${message}</code></pre>
+<b>Message:</b>
+<pre><code>${message}</code></pre>
 
-      <b>URL:</b> ${url}
-      <b>Status:</b> ${status}
-      <b>Payload:</b>
+<b>URL:</b> ${url}
+<b>Status:</b> ${status}
+<b>Payload:</b>
 <pre><code>${payload}</code></pre>
 `;
   return text;
@@ -59,7 +60,7 @@ const templateTelegram = ({
 
 app.post("/api/notification", async (req: Request, res: Response) => {
   try {
-    let { message, email, registerName, location_name, url, payload, status } =
+    let { message, email, registerName, location_name, url, payload, status, action } =
       req.body;
 
     if (payload !== "") {
@@ -105,5 +106,3 @@ app.get("/", (req, res) => {
 app.listen(PORT, () =>
   console.log(`Server running on ${PORT}, http://localhost:${PORT}`)
 );
-
-client.login(process.env.DISCORD_TOKEN);

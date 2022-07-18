@@ -40,7 +40,7 @@ const templateTelegram = ({
   status,
   action,
 }: ITemplateTelegram) => {
-const salesorderNo = payload && JSON.parse(payload).salesorder_no;
+  const salesorderNo = payload && JSON.parse(payload).salesorder_no;
   const text = `
 ${salesorderNo ? `<b>${salesorderNo}</b>` : null}
 <b>Lokasi:</b> ${location_name}
@@ -48,7 +48,7 @@ ${salesorderNo ? `<b>${salesorderNo}</b>` : null}
 <b>Email:</b> ${email}
 <b>Waktu</b> ${dateTimezone("Asia/Jakarta")}
 <b>Version</b> ${action ? "POSV3" : "POSV2"}
-<b>Grand Total</b> ${payload.grand_total}
+<b>Grand Total</b> ${JSON.parse(payload).grand_total}
 
 <b>Status:</b> ${status}
 <b>URL:</b> ${url}
@@ -79,7 +79,7 @@ app.post("/api/notification", async (req: Request, res: Response) => {
     console.log(filePath);
 
     await sendTelegramMessage({
-      chat_id: process.env.GROUP_CHAT_ID,
+      chat_id: process.env.GROUP_CHAT_ID as string,
       filePath,
       text: templateTelegram({
         location_name,

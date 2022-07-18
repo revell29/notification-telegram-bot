@@ -5,7 +5,7 @@ import { dateTimezone } from "../utils/dateFormat";
 import cors from "cors";
 import "moment/locale/id";
 import dotenv from "dotenv";
-import { client, sendMessageDiscord } from "../utils/discord";
+import { writeTempFile } from "../utils/file";
 
 const app = Express();
 const PORT = 8001;
@@ -27,6 +27,7 @@ interface ITemplateTelegram {
   url: string;
   payload: any;
   status: number;
+  action: string;
 }
 
 const templateTelegram = ({
@@ -37,38 +38,49 @@ const templateTelegram = ({
   url,
   payload,
   status,
+  action,
 }: ITemplateTelegram) => {
-  const text = `<b>POS Report Error</b>
-      ==========================================
-      <b>Lokasi:</b> ${location_name}
-      <b>Register:</b> ${registerName}
-      <b>Email:</b> ${email}
-      <b>Waktu</b> ${dateTimezone("Asia/Jakarta")}
-      <b>Grand Total</b> ${payload.grand_total}
-      ==========================================
+const salesorderNo = payload && JSON.parse(payload).salesorder_no;
+  const text = `
+${salesorderNo ? `<b>${salesorderNo}</b>` : null}
+<b>Lokasi:</b> ${location_name}
+<b>Register:</b> ${registerName}
+<b>Email:</b> ${email}
+<b>Waktu</b> ${dateTimezone("Asia/Jakarta")}
+<b>Version</b> ${action ? "POSV3" : "POSV2"}
+<b>Grand Total</b> ${payload.grand_total}
 
-      <b>Message:</b>
-      <pre><code>${message}</code></pre>
-
-      <b>URL:</b> ${url}
-      <b>Status:</b> ${status}
-      <b>Payload:</b>
-<pre><code>${payload}</code></pre>
+<b>Status:</b> ${status}
+<b>URL:</b> ${url}
+<b>Message:</b>
+<pre><code>${message}</code></pre>
 `;
   return text;
 };
 
 app.post("/api/notification", async (req: Request, res: Response) => {
   try {
-    let { message, email, registerName, location_name, url, payload, status } =
-      req.body;
+    let {
+      message,
+      email,
+      registerName,
+      location_name,
+      url,
+      payload,
+      status,
+      action,
+    } = req.body;
 
     if (payload !== "") {
       payload = JSON.stringify(JSON.parse(payload), null, 2);
     }
 
+    const filePath = await writeTempFile(action, payload);
+    console.log(filePath);
+
     await sendTelegramMessage({
       chat_id: process.env.GROUP_CHAT_ID,
+      filePath,
       text: templateTelegram({
         location_name,
         registerName,
@@ -77,6 +89,7 @@ app.post("/api/notification", async (req: Request, res: Response) => {
         url,
         payload,
         status,
+        action,
       }),
     });
 
@@ -106,5 +119,3 @@ app.get("/", (req, res) => {
 app.listen(PORT, () =>
   console.log(`Server running on ${PORT}, http://localhost:${PORT}`)
 );
-
-client.login(process.env.DISCORD_TOKEN);

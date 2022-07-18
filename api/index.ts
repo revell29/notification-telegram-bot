@@ -40,15 +40,15 @@ const templateTelegram = ({
   status,
   action,
 }: ITemplateTelegram) => {
-  const salesorderNo = payload && JSON.parse(payload).salesorder_no;
+const salesorderNo = payload && JSON.parse(payload).salesorder_no;
   const text = `
 ${salesorderNo ? `<b>${salesorderNo}</b>` : null}
-
 <b>Lokasi:</b> ${location_name}
 <b>Register:</b> ${registerName}
 <b>Email:</b> ${email}
 <b>Waktu</b> ${dateTimezone("Asia/Jakarta")}
 <b>Version</b> ${action ? "POSV3" : "POSV2"}
+<b>Grand Total</b> ${payload.grand_total}
 
 <b>Status:</b> ${status}
 <b>URL:</b> ${url}

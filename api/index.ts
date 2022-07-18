@@ -44,6 +44,7 @@ const templateTelegram = ({
       <b>Register:</b> ${registerName}
       <b>Email:</b> ${email}
       <b>Waktu</b> ${dateTimezone("Asia/Jakarta")}
+      <b>Grand Total</b> ${payload.grand_total}
       ==========================================
 
       <b>Message:</b>
